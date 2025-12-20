@@ -18,7 +18,7 @@ Just **useful information, always visible**.
 
 ---
 
-## Screenshots
+![](screenshot.jpg)
 
 ### Weather
 ![Weather](screenshot1.jpg)
@@ -168,7 +168,7 @@ now.toLocaleDateString('pt-PT', { ... })
   - No data is sent to any server.
 
   --- 
-  
+
   ## License
 
   This project is licensed under the
