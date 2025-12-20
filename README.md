@@ -53,24 +53,22 @@ This repository reflects:
 - Designed for continuous display
 
 ### Markets
-A **2×2 grid layout**:
+- Interactive TradingView charts
 - Stock market indices (ETF equivalents)
-- Interactive TradingView chart
-- Cryptocurrency list
-- Interactive TradingView chart
+- Cryptocurrency
 
 Charts update **on click**, without page reloads.
 
 ### News
 - International news (BBC)
-- National news (Expresso)
+- Portuguese National news (Expresso)
 - RSS feeds rendered client-side
-- Dark theme, optimized for long-distance readability
+- Dark theme, optimized for low light, smooth reading
 
 ---
 
 ## Navigation
-- Top tabs: **Weather / Markets / News**
+- Top tabs: **Weather / Markets / News / Settings**
 - Mouse and touch friendly
 - Ideal for:
   - Dedicated wall screens
@@ -125,7 +123,8 @@ chromium \
   ## Autostart
 
   - Create an autostart folder inside ~/.config
-  - Copy dashboard_v2.html
+  - Copy dashboard.desktop to autostart folder
+  - Reboot
   - Chromium will launch automatically in kiosk mode
   - To exit: Alt + F4
 
@@ -162,6 +161,14 @@ now.toLocaleDateString('pt-PT', { ... })
 
   ---
 
+  ## Settings Page
+
+  - User can set desired location for weather and clock
+  - All settings are stored locally in your browser using localStorage.
+  - No data is sent to any server.
+
+  --- 
+  
   ## License
 
   This project is licensed under the
