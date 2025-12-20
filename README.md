@@ -1,71 +1,112 @@
-# Kiosk Weather Markets Daily-News Dashboard
+# Daily Dashboard  
+### Weather · Markets · News — Built for always-on screens
 
-A **web-based dashboard** designed to run in **kiosk mode** on a **Raspberry Pi** (tested on RPi 3), at **Full HD resolution (1920×1080)**.
+A **minimalist, zero-backend web dashboard** designed for **kiosk mode**, optimized for **Raspberry Pi** and **dedicated displays** (TVs, wall screens, family hubs).
 
-It will also work on any browser, any OS.
+Built to answer a simple question:
 
-No backend, no accounts, no API keys.  
-Built entirely with **HTML, CSS, and vanilla JavaScript**, using **public embeds**.
+> **What information do I actually want to see, at a glance, every day?**
 
-### Weather Page
+Tested on **Raspberry Pi 3**, running at **Full HD (1920×1080)**, but works on **any modern browser, any OS**.
+
+No servers.  
+No accounts.  
+No API keys.  
+No tracking.  
+
+Just **useful information, always visible**.
+
+---
+
+## Screenshots
+
+### Weather
 ![Weather](screenshot1.jpg)
 
-### Markets Page
+### Markets
 ![Markets](screenshot2.jpg)
 
 ---
 
-## Features
+## Why this exists
 
-### Page 1 — Weather
-- Interactive weather map (Windy)
+This project was built as a **personal daily dashboard** for home use — a screen that stays on and shows:
+- Weather at a glance
+- Market movements
+- Relevant news
+
+Over time, it became a **clean, reusable solution**, built with the help of AI to accelerate development across stacks I don’t normally use (HTML, CSS, JavaScript).
+
+This repository reflects:
+- Practical engineering
+- Simplicity over complexity
+- Public data over private APIs
+- Control over convenience
+
+---
+
+## Pages Overview
+
+### Weather
+- Interactive **Windy** weather map
 - Fullscreen layout
 - Designed for continuous display
 
-### Page 2 — Markets
-2×2 grid layout:
-- List of **stock market indices** (ETF equivalents)
-- Interactive chart (TradingView)
-- List of **cryptocurrencies**
-- Interactive chart (TradingView)
+### Markets
+A **2×2 grid layout**:
+- Stock market indices (ETF equivalents)
+- Interactive TradingView chart
+- Cryptocurrency list
+- Interactive TradingView chart
 
-Charts update **on click**, without reloading the page.
+Charts update **on click**, without page reloads.
 
-### Page 3 — News
-- **International news** (BBC)
-- **National news** (Expresso)
-- RSS feeds rendered via JavaScript
-- Dark theme, optimized for soft reading
+### News
+- International news (BBC)
+- National news (Expresso)
+- RSS feeds rendered client-side
+- Dark theme, optimized for long-distance readability
 
 ---
 
 ## Navigation
 - Top tabs: **Weather / Markets / News**
 - Mouse and touch friendly
-- Ideal for dedicated screens or TVs
+- Ideal for:
+  - Dedicated wall screens
+  - TVs
+  - Raspberry Pi kiosks
+  - Family or office dashboards
 
 ---
 
-## Technologies
-- HTML5
-- CSS Grid
-- Vanilla JavaScript
+## Tech Stack & Design Choices
+
+- **HTML5**
+- **CSS Grid**
+- **Vanilla JavaScript**
 - Chromium (kiosk mode)
-- TradingView embeds
 - Windy embed
-- Public RSS feeds (BBC / Expresso)
+- TradingView embeds
+- Public RSS feeds
+
+No frameworks by design.  
+Zero backend.  
+Zero maintenance.
 
 ---
 
 ## Requirements
+
 - Raspberry Pi 3 or newer  
 - Raspberry Pi OS (Bullseye / Bookworm / Trixie)
-- Chromium browser
+- Chromium browser  
 - Screen resolution: **1920×1080**
+- Mac, Windows compatible
 
 ---
 
-## Kiosk Mode Example
+## Kiosk Mode (Example)
 
 ```bash
 chromium \
@@ -77,66 +118,61 @@ chromium \
   --use-mock-keychain \
   --force-device-scale-factor=1.2 \
   file:///home/$HOME/dashboard.html
+  ```
 
----
+  ---
 
-## Autostart
+  ## Autostart
 
-To add the .html Dashboard to the autostart
-Create a folder autostart inside ./config
-Copy the file dashboard_v2.html
-It will open chromium in kiosk mode
-To close - alt+F4  
+  - Create an autostart folder inside ~/.config
+  - Copy dashboard_v2.html
+  - Chromium will launch automatically in kiosk mode
+  - To exit: Alt + F4
 
----
+  ---
 
-## Customization
+  ## Customization
 
-### Change Weather Location (Windy)
+  - Weather Location (Windy)
+  - Edit latitude and longitude in the Windy iframe inside dashboard_v2.html:
 
-The Windy map location is defined by latitude and longitude in the iframe URL.
-
-In `dashboard_v2.html`, locate the Windy iframe:
-
-```html
+```bash
 <iframe
   src="https://embed.windy.com/embed2.html?lat=38.7223&lon=-9.1393&zoom=7&overlay=rain&product=ecmwf&metricTemp=%C2%B0C">
 </iframe>
+```
 
-To change the location:
+  ---
 
-Replace lat with the desired latitude
-Replace lon with the desired longitude
+  ## Time & Date Locale
 
-## Change Time & Date Location (Clock)
+  The clock uses browser locale and system time.
 
-The clock uses the browser’s locale and system time by default.
-In the JavaScript section, locate:
-
+```bash
 now.toLocaleTimeString('pt-PT', { ... })
 now.toLocaleDateString('pt-PT', { ... })
+```
 
-Change language / date format
+  Change 'pt-PT' to:
+  - 'en-GB'
+  - 'en-US'
+  - 'de-DE'
+  - 'fr-FR'
+  - etc.
 
-Replace 'pt-PT' with another locale, for example:
+  ---
 
-'en-GB' → English (UK)
-'en-US' → English (US)
-'de-DE' → German
-'fr-FR' → French
+  ## License
 
---- 
+  This project is licensed under the
+  Creative Commons Attribution–NonCommercial 4.0 International (CC BY-NC 4.0).
 
-## License
-This project is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**.
+  You are free to:
+  Share — copy and redistribute the material
+  Adapt — remix, transform, and build upon the material
+  Under the following terms:
+  Attribution — you must give appropriate credit
+  NonCommercial — you may not use the material for commercial purposes
 
-You are free to:
-- Share — copy and redistribute the material
-- Adapt — remix, transform, and build upon the material
-
-Under the following terms:
-- Attribution — you must give appropriate credit
-- NonCommercial — you may not use the material for commercial purposes
-
-License details:  
-https://creativecommons.org/licenses/by-nc/4.0/
+  License details:
+  https://creativecommons.org/licenses/by-nc/4.0/

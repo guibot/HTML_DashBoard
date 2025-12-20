@@ -145,6 +145,7 @@ iframe {
   <button onclick="showPage('weather')" id="btn-weather" class="active">Tempo</button>
   <button onclick="showPage('markets')" id="btn-markets">Mercados</button>
   <button onclick="showPage('news')" id="btn-news">Notícias</button>
+  <button onclick="showPage('settings')" id="btn-settings">Settings</button>
 
   <div id="clock"></div>
 
@@ -217,6 +218,55 @@ iframe {
   </div>
 </div>
 
+<!-- PÁGINA 4 — SETTINGS -->
+<div id="settings" class="page">
+  <div style="padding:20px; max-width:460px; line-height:1.4;">
+
+    <h2>Settings</h2>
+
+    <h3>Weather Location (Windy)</h3>
+    <p style="opacity:0.8; font-size:14px;">
+      Enter the <strong>latitude</strong> and <strong>longitude</strong> of the location you want to display.
+      <br>
+      Example (Lisbon): <code>38.7223</code>, <code>-9.1393</code>
+      <br>
+      Tip: You can get coordinates from Google Maps (right-click → “What’s here?”).
+    </p>
+
+    <label>Latitude</label><br>
+    <input id="lat" type="number" step="0.0001"><br><br>
+
+    <label>Longitude</label><br>
+    <input id="lon" type="number" step="0.0001"><br><br>
+
+    <h3>Clock Time Zone</h3>
+    <p style="opacity:0.8; font-size:14px;">
+      Enter the time zone using the format <strong>Region/City</strong>.
+      <br>
+      Examples:
+      <br>
+      <code>Europe/Lisbon</code>,
+      <code>Europe/Stockholm</code>,
+      <code>America/New_York</code>
+    </p>
+
+    <label>Time Zone</label><br>
+    <input id="timezone" type="text" placeholder="Europe/Lisbon"><br><br>
+
+    <button onclick="saveSettings()">Save</button>
+
+    <p style="margin-top:24px; font-size:13px; opacity:0.6;">
+  Note: 
+  <br>All settings are stored locally in your browser using <strong>localStorage</strong>.
+  <br>No data is sent to any server.
+</p>
+
+
+  </div>
+</div>
+
+
+
 
 <script>
 function showPage(id) {
@@ -241,21 +291,82 @@ function setCrypto(symbol) {
 }
 
 function updateClock() {
+  const { timezone } = loadSettings();
   const now = new Date();
-  const time = now.toLocaleTimeString('pt-PT', {
+
+  const time = now.toLocaleTimeString('en-GB', {
     hour: '2-digit',
     minute: '2-digit',
+    second: '2-digit',
+    timeZone: timezone
   });
+
   const date = now.toLocaleDateString('en-GB', {
     weekday: 'short',
     day: '2-digit',
-    month: 'short'
+    month: 'short',
+    timeZone: timezone
   });
+
   document.getElementById('clock').textContent = `${date} · ${time}`;
 }
 
+
 updateClock();
 setInterval(updateClock, 1000);
+
+
+function updateWindy(lat, lon) {
+  const iframe = document.querySelector('#weather iframe');
+
+  iframe.src =
+    `https://embed.windy.com/embed2.html` +
+    `?lat=${lat}` +
+    `&lon=${lon}` +
+    `&zoom=7` +
+    `&overlay=rain` +
+    `&product=ecmwf` +
+    `&metricTemp=%C2%B0C`;
+}
+
+
+
+const DEFAULTS = {
+  lat: 38.7223,
+  lon: -9.1393,
+  timezone: 'Europe/Lisbon'
+};
+
+function loadSettings() {
+  return {
+    lat: localStorage.getItem('lat') || DEFAULTS.lat,
+    lon: localStorage.getItem('lon') || DEFAULTS.lon,
+    timezone: localStorage.getItem('timezone') || DEFAULTS.timezone
+  };
+}
+
+function saveSettings() {
+  localStorage.setItem('lat', document.getElementById('lat').value);
+  localStorage.setItem('lon', document.getElementById('lon').value);
+  localStorage.setItem('timezone', document.getElementById('timezone').value);
+  applySettings();
+  alert('Saved');
+}
+
+
+function applySettings() {
+  const s = loadSettings();
+
+  updateWindy(s.lat, s.lon);
+
+  document.getElementById('lat').value = s.lat;
+  document.getElementById('lon').value = s.lon;
+  document.getElementById('timezone').value = s.timezone;
+}
+
+applySettings();
+setInterval(updateClock, 1000);
+
 </script>
 
 </body>
