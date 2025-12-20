@@ -127,6 +127,15 @@ iframe {
   line-height: 1.35;
 }
 
+#clock {
+  margin-left: auto;           /* empurra para a direita */
+  font-size: 18px;
+  letter-spacing: 0.5px;
+  opacity: 0.85;
+  white-space: nowrap;
+}
+
+
 </style>
 </head>
 
@@ -136,6 +145,9 @@ iframe {
   <button onclick="showPage('weather')" id="btn-weather" class="active">Tempo</button>
   <button onclick="showPage('markets')" id="btn-markets">Mercados</button>
   <button onclick="showPage('news')" id="btn-news">Notícias</button>
+
+  <div id="clock"></div>
+
 </nav>
 
 <!-- PÁGINA 1 — TEMPO -->
@@ -227,6 +239,23 @@ function setCrypto(symbol) {
     encodeURIComponent(symbol) +
     "&interval=60&hideideas=1&theme=dark&style=1";
 }
+
+function updateClock() {
+  const now = new Date();
+  const time = now.toLocaleTimeString('pt-PT', {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+  const date = now.toLocaleDateString('en-GB', {
+    weekday: 'short',
+    day: '2-digit',
+    month: 'short'
+  });
+  document.getElementById('clock').textContent = `${date} · ${time}`;
+}
+
+updateClock();
+setInterval(updateClock, 1000);
 </script>
 
 </body>

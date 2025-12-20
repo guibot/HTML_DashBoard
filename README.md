@@ -90,6 +90,43 @@ To close - alt+F4
 
 ---
 
+## Customization
+
+### Change Weather Location (Windy)
+
+The Windy map location is defined by latitude and longitude in the iframe URL.
+
+In `dashboard_v2.html`, locate the Windy iframe:
+
+```html
+<iframe
+  src="https://embed.windy.com/embed2.html?lat=38.7223&lon=-9.1393&zoom=7&overlay=rain&product=ecmwf&metricTemp=%C2%B0C">
+</iframe>
+
+To change the location:
+
+Replace lat with the desired latitude
+Replace lon with the desired longitude
+
+## Change Time & Date Location (Clock)
+
+The clock uses the browser’s locale and system time by default.
+In the JavaScript section, locate:
+
+now.toLocaleTimeString('pt-PT', { ... })
+now.toLocaleDateString('pt-PT', { ... })
+
+Change language / date format
+
+Replace 'pt-PT' with another locale, for example:
+
+'en-GB' → English (UK)
+'en-US' → English (US)
+'de-DE' → German
+'fr-FR' → French
+
+--- 
+
 ## License
 This project is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**.
 
