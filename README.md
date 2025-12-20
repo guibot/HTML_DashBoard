@@ -80,6 +80,16 @@ chromium \
 
 ---
 
+## Autostart
+
+To add the .html Dashboard to the autostart
+Create a folder autostart inside ./config
+Copy the file dashboard_v2.html
+It will open chromium in kiosk mode
+To close - alt+F4  
+
+---
+
 ## License
 This project is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**.
 
