@@ -59,34 +59,6 @@ iframe {
   grid-template-rows: 1fr 1fr;
   height: 100%;
 }
-
-.markets-sidebar {
-  grid-row: 1 / span 2;
-  display: grid;
-  grid-template-rows: 1fr auto 1fr;
-  padding: 12px;
-
-}
-
-.markets-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-.markets-separator {
-  height: 1px;
-  background: #1b2230;
-  margin: 12px 0;
-}
-
-.markets-sidebar h3 {
-  margin: 6px 0 10px;
-  font-size: 14px;
-  opacity: 0.8;
-}
-
-
 .list {
   padding: 12px;
   border-right: 1px solid #1b2230;
@@ -185,8 +157,6 @@ iframe {
 }
 
 
-
-
 </style>
 </head>
 
@@ -195,9 +165,9 @@ iframe {
 <nav>
   <button onclick="showPage('weather')" id="btn-weather" class="active">Tempo</button>
   <button onclick="showPage('markets')" id="btn-markets">Mercados</button>
-  <button onclick="showPage('tech1')" id="btn-tech1">Tech1</button>
-  <button onclick="showPage('tech2')" id="btn-tech2">Tech2</button>
-  <button onclick="showPage('tech3')" id="btn-tech2">Tech3</button>
+  <button onclick="showPage('tech1')" id="btn-tech1">Tecnologia_1</button>
+  <button onclick="showPage('tech2')" id="btn-tech2">Tecnologia_2</button>
+  <button onclick="showPage('tech3')" id="btn-tech2">Tecnologia_3</button>
   <button onclick="showPage('news')" id="btn-news">Notícias</button>
   <button onclick="showPage('settings')" id="btn-settings">Settings</button>
 
@@ -217,58 +187,16 @@ iframe {
 <div id="markets" class="page">
   <div class="markets">
 
-    <!-- SIDEBAR ESQUERDA -->
-    <div class="list markets-sidebar">
-
-      <!-- BLOCO 1 -->
-      <div class="markets-block">
-        <div class="markets-grid">
-          <div>
-            <h3>Bolsa</h3>
-            <button onclick="setTop('AMEX:SPY')">S&P 500</button>
-            <button onclick="setTop('NASDAQ:QQQ')">Nasdaq 100</button>
-            <button onclick="setTop('AMEX:DIA')">Dow Jones</button>
-            <button onclick="setTop('LSE:ISF')">FTSE 100</button>
-          </div>
-
-          <div>
-            <h3>Crypto</h3>
-            <button onclick="setTop('BINANCE:BTCEUR')">Bitcoin EUR</button>
-            <button onclick="setTop('BINANCE:ETHEUR')">Ethereum EUR</button>
-            <button onclick="setTop('BINANCE:SOLEUR')">Solana EUR</button>
-            <button onclick="setTop('BINANCE:BNBEUR')">BNB EUR</button>
-            <button onclick="setTop('BINANCE:ADAEUR')">Cardano EUR</button>
-          </div>
-        </div>
-      </div>
-
-    <!-- SEPARADOR -->
-    <div class="markets-separator"></div>
-
-      <!-- BLOCO 2 (igual ao primeiro) -->
-      <div class="markets-block">
-        <div class="markets-grid">
-          <div>
-            <h3>Bolsa</h3>
-            <button onclick="setBottom('AMEX:SPY')">S&P 500</button>
-            <button onclick="setBottom('NASDAQ:QQQ')">Nasdaq 100</button>
-            <button onclick="setBottom('AMEX:DIA')">Dow Jones</button>
-            <button onclick="setBottom('LSE:ISF')">FTSE 100</button>
-          </div>
-
-          <div>
-            <h3>Crypto</h3>
-            <button onclick="setBottom('BINANCE:BTCEUR')">Bitcoin EUR</button>
-            <button onclick="setBottom('BINANCE:ETHEUR')">Ethereum EUR</button>
-            <button onclick="setBottom('BINANCE:SOLEUR')">Solana EUR</button>
-            <button onclick="setBottom('BINANCE:BNBEUR')">BNB EUR</button>
-            <button onclick="setBottom('BINANCE:ADAEUR')">Cardano EUR</button>
-          </div>
-        </div>
-      </div>
-
+    <!-- LISTA ÍNDICES -->
+    <div class="list">
+      <h3>Índices Bolsa</h3>
+      <button onclick="setMarket('AMEX:SPY')">S&P 500</button>
+      <button onclick="setMarket('NASDAQ:QQQ')">Nasdaq 100</button>
+      <button onclick="setMarket('AMEX:DIA')">Dow Jones</button>
+      <button onclick="setMarket('LSE:ISF')">FTSE 100</button>
+      <!-- <button onclick="setMarket('XETR:DAXEX')">DAX</button> -->
+      <!-- <button onclick="setMarket('AMEX:URTH')">MSCI World</button> -->
     </div>
-
 
     <!-- GRÁFICO BOLSA -->
     <div class="chart">
@@ -277,7 +205,15 @@ iframe {
       </iframe>
     </div>
 
-    
+    <!-- LISTA CRYPTO -->
+    <div class="list">
+      <h3>Crypto</h3>
+      <button onclick="setCrypto('BINANCE:BTCEUR')">Bitcoin</button>
+      <button onclick="setCrypto('BINANCE:ETHEUR')">Ethereum</button>
+      <button onclick="setCrypto('BINANCE:SOLEUR')">Solana</button>
+      <button onclick="setCrypto('BINANCE:BNBEUR')">BNB</button>
+      <button onclick="setCrypto('BINANCE:ADAEUR')">Cardano</button>
+    </div>
 
     <!-- GRÁFICO CRYPTO -->
     <div>
@@ -416,49 +352,12 @@ iframe {
 
 
 <script>
-
-  const DEFAULT_TOP_SYMBOL = 'BINANCE:BTCEUR';
-const DEFAULT_BOTTOM_SYMBOL = 'BINANCE:ETHEUR';
-
-function initMarkets() {
-  setTop(DEFAULT_TOP_SYMBOL);
-  setBottom(DEFAULT_BOTTOM_SYMBOL);
-}
-
-
-
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-
   document.getElementById(id).classList.add('active');
   document.getElementById('btn-' + id).classList.add('active');
-
-  if (id === 'markets') {
-    initMarkets();
-  }
 }
-
-
-
-
-
-// BLOCO DE CIMA → controla o gráfico de CIMA
-function setTop(symbol) {
-  document.getElementById('marketFrame').src =
-    "https://s.tradingview.com/widgetembed/?symbol=" +
-    encodeURIComponent(symbol) +
-    "&interval=60&hideideas=1&theme=dark&style=1";
-}
-
-// BLOCO DE BAIXO → controla o gráfico de BAIXO
-function setBottom(symbol) {
-  document.getElementById('cryptoFrame').src =
-    "https://s.tradingview.com/widgetembed/?symbol=" +
-    encodeURIComponent(symbol) +
-    "&interval=60&hideideas=1&theme=dark&style=1";
-}
-
 
 function setMarket(symbol) {
   document.getElementById('marketFrame').src =
