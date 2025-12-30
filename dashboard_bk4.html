@@ -326,15 +326,9 @@ iframe {
 <!-- PÁGINA 1 — TEMPO -->
 <div id="weather" class="page active">
   <iframe
-  src="https://embed.windy.com/embed2.html
-    ?lat=38.7223
-    &lon=-9.1393
-    &zoom=7
-    &product=ecmwf
-    &overlay=clouds"
-  loading="lazy">
-</iframe>
-
+    src="https://embed.windy.com/embed2.html?lat=38.7223&lon=-9.1393&zoom=7&overlay=satellite&product=ecmwf&metricTemp=%C2%B0C"
+    loading="lazy">
+  </iframe>
 </div>
 
 <!-- PÁGINA 2 — MERCADOS -->
@@ -535,6 +529,20 @@ iframe {
     <label>Longitude</label><br>
     <input id="lon" type="number" step="0.0001"><br><br>
 
+    <h3>Clock Time Zone</h3>
+    <p style="opacity:0.8; font-size:14px;">
+      Enter the time zone using the format <strong>Region/City</strong>.
+      <br>
+      Examples:
+      <br>
+      <code>Europe/Lisbon</code>,
+      <code>Europe/Stockholm</code>,
+      <code>America/New_York</code>
+    </p>
+
+    <label>Time Zone</label><br>
+    <input id="timezone" type="text" placeholder="Europe/Lisbon"><br><br>
+
     <button onclick="saveSettings()">Save</button>
 
     <p style="margin-top:24px; font-size:13px; opacity:0.6;">
@@ -610,17 +618,21 @@ function setCrypto(symbol) {
 }
 
 function updateClock() {
+  const { timezone } = loadSettings();
   const now = new Date();
 
   const time = now.toLocaleTimeString('en-GB', {
     hour: '2-digit',
-    minute: '2-digit'
+    minute: '2-digit',
+    second: '2-digit',
+    timeZone: timezone
   });
 
   const date = now.toLocaleDateString('en-GB', {
     weekday: 'short',
     day: '2-digit',
-    month: 'short'
+    month: 'short',
+    timeZone: timezone
   });
 
   document.getElementById('clock').textContent = `${date} · ${time}`;
@@ -649,18 +661,21 @@ function updateWindy(lat, lon) {
 const DEFAULTS = {
   lat: 38.7223,
   lon: -9.1393,
+  timezone: 'Europe/Lisbon'
 };
 
 function loadSettings() {
   return {
     lat: localStorage.getItem('lat') || DEFAULTS.lat,
-    lon: localStorage.getItem('lon') || DEFAULTS.lon
+    lon: localStorage.getItem('lon') || DEFAULTS.lon,
+    timezone: localStorage.getItem('timezone') || DEFAULTS.timezone
   };
 }
 
 function saveSettings() {
   localStorage.setItem('lat', document.getElementById('lat').value);
   localStorage.setItem('lon', document.getElementById('lon').value);
+  localStorage.setItem('timezone', document.getElementById('timezone').value);
   applySettings();
   alert('Saved');
 }
